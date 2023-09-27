@@ -17,22 +17,21 @@ export default function App() {
   const [error, setError] = useState<TError>();
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
-        const result = await requestUsers({
-          name: state.name,
-          age: state.age,
-          limit: state.limit,
-          offset: state.page * state.limit,
-        });
-        setData(result);
+        setData(
+          await requestUsers({
+            name: state.name,
+            age: state.age,
+            limit: state.limit,
+            offset: state.page * state.limit,
+          })
+        );
         setError(undefined);
       } catch (error: any) {
         setError(error.message);
       }
-    };
-
-    fetchData();
+    })();
   }, [state]);
 
   return (
